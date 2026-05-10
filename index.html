@@ -14,7 +14,6 @@
             --bkash: #d12053; --nagad: #f7941d; --bank: #006747;
         }
 
-        /* Default Dark Mode Styles */
         body.dark-mode {
             --bg: #081120; --card: #162033; --text: #ffffff; --sub: #cbd5e1; --border: #253045;
             --note-bg: #1e293b; --note-border: #60a5fa;
@@ -25,68 +24,77 @@
         body { background: var(--bg); color: var(--text); padding: 18px 18px 110px; transition: .3s; }
         .container { max-width: 720px; margin: auto; }
         
+        /* Header */
         .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
         .logo { font-size: 20px; font-weight: 800; color: var(--blue); }
-        .refresh-fab { border: none; background: var(--blue); color: white; width: 38px; height: 38px; border-radius: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; transition: 0.3s; }
+        .refresh-fab { border: none; background: var(--blue); color: white; width: 40px; height: 40px; border-radius: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; transition: 0.3s; }
         
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        .spinning { animation: spin 0.8s ease-in-out; }
+        /* 🔥 Refresh Animation Logic 🔥 */
+        .refresh-fab span { display: inline-block; transition: 0.8s ease-in-out; }
+        .spinning span { transform: rotate(360deg); }
 
+        /* Wallet Cards */
         .wallet-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 20px; }
-        .wallet-card { background: var(--card); padding: 14px; border-radius: 16px; border: 1px solid var(--border); }
+        .wallet-card { background: var(--card); padding: 16px; border-radius: 16px; border: 1px solid var(--border); }
         .wallet-card h4 { font-size: 9px; color: var(--sub); text-transform: uppercase; margin-bottom: 4px; font-weight: 700; }
         .wallet-card h2 { font-size: 14px; font-weight: 700; }
 
+        /* Stats */
         .top-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; }
         .stat-box { background: var(--card); padding: 14px 8px; border-radius: 16px; border: 1px solid var(--border); text-align: center; }
         .stat-box h4 { font-size: 9px; color: var(--sub); text-transform: uppercase; margin-bottom: 4px; }
         .stat-box h2 { font-size: 13px; font-weight: 700; }
 
-        .card { background: var(--card); padding: 22px; border-radius: 24px; margin-bottom: 18px; border: 1px solid var(--border); }
+        /* Entry Card */
+        .card { background: var(--card); padding: 22px; border-radius: 24px; margin-bottom: 20px; border: 1px solid var(--border); }
         .card-title { font-size: 17px; font-weight: 700; margin-bottom: 15px; }
 
         input, select, textarea { width: 100%; padding: 13px; border: 1px solid var(--border); background: var(--bg); border-radius: 12px; font-size: 14px; color: var(--text); outline: none; margin-bottom: 10px; }
-        .save-btn { background: var(--blue); color: white; border: none; padding: 15px; border-radius: 12px; font-size: 15px; font-weight: 700; cursor: pointer; width: 100%; }
+        .save-btn { background: var(--blue); color: white; border: none; padding: 15px; border-radius: 12px; font-size: 15px; font-weight: 700; cursor: pointer; width: 100%; transition: 0.2s; }
+        .save-btn:active { transform: scale(0.98); }
 
+        /* 🔥 Activity Card Design (১১৯২০ স্ক্রিনশট অনুযায়ী) 🔥 */
+        .activity-card { background: var(--card); padding: 22px; border-radius: 24px; margin-bottom: 20px; border: 1px solid var(--border); }
+        .activity-item { background: var(--card); padding: 15px; border-radius: 18px; margin-bottom: 10px; border: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+        .activity-info h4 { font-size: 14px; font-weight: 700; }
+        .activity-info p { font-size: 11px; color: var(--sub); margin-top: 2px; }
+        .activity-amount { font-size: 15px; font-weight: 800; }
+
+        /* General Item (History) */
         .item { background: var(--card); padding: 18px; border-radius: 22px; margin-top: 12px; border: 1px solid var(--border); display: flex; justify-content: space-between; align-items: flex-start; }
-        
-        .pay-tag { color: white; font-size: 9px; padding: 3px 12px; border-radius: 20px; font-weight: 700; text-transform: uppercase; display: inline-block; background: var(--sub); }
+        .pay-tag { color: white; font-size: 9px; padding: 3px 12px; border-radius: 20px; font-weight: 700; text-transform: uppercase; display: inline-block; margin-top: 8px; background: #475569; }
         .pay-tag.bkash { background: var(--bkash); }
         .pay-tag.nagad { background: var(--nagad); }
         .pay-tag.bank { background: var(--bank); }
-        .pay-tag.cash { background: #475569; }
+        .person-tag { background: #e2e8f0; color: #475569; font-size: 9px; padding: 3px 12px; border-radius: 20px; font-weight: 700; margin-left: 5px; }
 
-        .person-tag { background: #e2e8f0; color: #475569; font-size: 9px; padding: 3px 12px; border-radius: 20px; font-weight: 700; text-transform: uppercase; }
-        
-        .note-box { 
-            background: var(--note-bg); padding: 10px 14px; margin-top: 12px; border-radius: 12px; border-left: 4px solid var(--note-border); position: relative; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
-        }
-        .note-box p { font-size: 11px; font-style: italic; color: var(--sub); line-height: 1.5; position: relative; }
-        .note-box::before { content: "“"; position: absolute; top: 2px; left: 6px; font-size: 20px; color: var(--note-border); opacity: 0.3; font-family: serif; }
-        
-        .amount { font-size: 15px; font-weight: 800; }
-
-        .loan-main-card { background: var(--bg); padding: 25px 20px; border-radius: 20px; text-align: center; margin-bottom: 15px; border: 1px solid var(--border); }
-        .loan-main-card h4 { font-size: 11px; color: var(--sub); font-weight: 700; text-transform: uppercase; margin-bottom: 8px; }
-        .loan-main-card h2 { font-size: 26px; font-weight: 800; }
-
+        /* Nav */
         .bottom-nav { position: fixed; left: 50%; bottom: 16px; transform: translateX(-50%); width: 92%; max-width: 430px; background: var(--card); padding: 10px; border-radius: 24px; display: flex; justify-content: space-around; box-shadow: 0 8px 25px rgba(0,0,0,.1); z-index: 999; border: 1px solid var(--border); }
         .nav-btn { border: none; background: none; padding: 8px 14px; border-radius: 16px; display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: 11px; font-weight: 700; color: var(--sub); cursor: pointer; }
         .nav-btn.active-nav { background: var(--blue); color: white; }
 
+        /* Toast */
+        #toast { visibility: hidden; min-width: 200px; background: var(--green); color: white; text-align: center; border-radius: 50px; padding: 12px; position: fixed; z-index: 1000; left: 50%; bottom: 100px; transform: translateX(-50%); font-weight: 700; }
+        #toast.show { visibility: visible; animation: fadeInUp 0.4s forwards; }
+        @keyframes fadeInUp { from { opacity: 0; bottom: 80px; } to { opacity: 1; bottom: 100px; } }
+
         .green { color: var(--green); } .red { color: var(--red); } .blue { color: var(--blue); }
         .page { display: none; } .active { display: block; animation: fadeIn 0.3s; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 
-<body class="dark-mode"> <div class="container">
+<body class="dark-mode"> 
+
+<div id="toast">✅ Saved Successfully</div>
+
+<div class="container">
     <div id="dashboard" class="page active">
         <div class="header">
             <div class="logo">Expense Tracker</div>
             <div style="display: flex; gap: 10px; align-items: center;">
-                <button class="refresh-fab" onclick="refreshNow()"><span id="refreshIcon">⟳</span></button>
                 <button onclick="toggleDark()" style="border:none; background:none; font-size:20px; cursor:pointer;">🌓</button>
+                <button class="refresh-fab" id="refreshBtn" onclick="refreshNow()"><span id="refreshIcon">⟳</span></button>
             </div>
         </div>
 
@@ -114,15 +122,15 @@
             <button class="save-btn" id="saveBtn" onclick="saveData()">Save Entry</button>
         </div>
 
-        <div class="card">
+        <div class="activity-card">
             <div class="card-title">Recent Activity</div>
-            <div id="transactionList"></div>
+            <div id="recentList"></div>
         </div>
     </div>
 
     <div id="history" class="page">
         <div class="card">
-            <div class="card-title">All History</div>
+            <div class="card-title">Full History</div>
             <input type="text" id="searchInput" placeholder="Search..." onkeyup="filterHistory()">
             <div id="historyList"></div>
         </div>
@@ -131,21 +139,21 @@
     <div id="loans" class="page">
         <div class="card">
             <div class="card-title">Loan Summary</div>
-            <div class="loan-main-card">
-                <h4>Net Loan Status</h4>
-                <h2 class="blue" id="loanStatus">৳ 0</h2>
+            <div style="background: var(--bg); padding: 25px; border-radius: 20px; text-align: center; margin-bottom: 15px; border: 1px solid var(--border);">
+                <h4 style="font-size: 11px; color: var(--sub); text-transform: uppercase;">Net Loan Status</h4>
+                <h2 class="blue" id="loanStatus" style="font-size: 26px;">৳ 0</h2>
             </div>
-            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-bottom: 15px;">
                 <div class="stat-box"><h4>Receive</h4><h2 class="green" id="receiveAmount">৳ 0</h2></div>
                 <div class="stat-box"><h4>Pay</h4><h2 class="red" id="payAmount">৳ 0</h2></div>
             </div>
-            <div id="loanSummaryList" style="margin-top:20px;"></div>
+            <div id="loanSummaryList"></div>
         </div>
     </div>
 </div>
 
 <nav class="bottom-nav">
-    <button id="homeBtn" class="nav-btn active-nav" onclick="showPage('dashboard', this)">🏠<br>Home</button>
+    <button class="nav-btn active-nav" onclick="showPage('dashboard', this)">🏠<br>Home</button>
     <button class="nav-btn" onclick="showPage('history', this)">📜<br>History</button>
     <button class="nav-btn" onclick="showPage('loans', this)">💰<br>Loans</button>
 </nav>
@@ -153,15 +161,33 @@
 <script>
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxA3FVbmfnbYjPJHd6QmgWbZp2fe3MGtiVX9jWHJ6xBNzk4HYQJH0_5XZalXrba8c3YFg/exec";
 
-    function toggleDark() { 
-        document.body.classList.toggle("dark-mode"); 
-    }
+    function toggleDark() { document.body.classList.toggle("dark-mode"); }
 
     function showPage(id, btn) {
         document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
         document.getElementById(id).classList.add("active");
         document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("active-nav"));
         btn.classList.add("active-nav");
+    }
+
+    // 🔥 Fix: Refresh Function with Animation & Clear 🔥
+    function refreshNow(){
+        const btn = document.getElementById("refreshBtn");
+        btn.classList.add("spinning");
+        
+        // ফর্ম ক্লিয়ার করা
+        document.getElementById("amount").value = "";
+        document.getElementById("note").value = "";
+        document.getElementById("person").value = "";
+        document.getElementById("type").value = "";
+        document.getElementById("category").innerHTML = '<option value="">Category</option>';
+        document.getElementById("payment").value = "Cash";
+
+        loadDashboard();
+
+        setTimeout(() => {
+            btn.classList.remove("spinning");
+        }, 800);
     }
 
     function updateCategory(){
@@ -174,10 +200,8 @@
 
     function handleCategoryChange(){
         let cat = document.getElementById("category").value;
-        let person = document.getElementById("person");
-        let payment = document.getElementById("payment");
-        person.style.display = ["Give Loan","Take Loan","Loan Received","Loan Paid"].includes(cat) ? "block" : "none";
-        if(cat === "DPS Payment") payment.value = "Bkash";
+        document.getElementById("person").style.display = ["Give Loan","Take Loan","Loan Received","Loan Paid"].includes(cat) ? "block" : "none";
+        if(cat === "DPS Payment") document.getElementById("payment").value = "Bkash";
     }
 
     function saveData(){
@@ -192,7 +216,12 @@
             person: document.getElementById("person").value,
             note: document.getElementById("note").value
         };
-        fetch(SCRIPT_URL, { method:"POST", body:JSON.stringify(data) }).then(() => { btn.innerText = "Save Entry"; refreshNow(); });
+        fetch(SCRIPT_URL, { method:"POST", body:JSON.stringify(data) }).then(() => { 
+            document.getElementById("toast").className = "show";
+            setTimeout(() => { document.getElementById("toast").className = ""; }, 3000);
+            btn.innerText = "Save Entry";
+            refreshNow(); 
+        });
     }
 
     function getPayTagClass(method){
@@ -201,7 +230,6 @@
         if(m.includes("bkash")) return "pay-tag bkash";
         if(m.includes("nagad")) return "pay-tag nagad";
         if(m.includes("bank")) return "pay-tag bank";
-        if(m.includes("cash")) return "pay-tag cash";
         return "pay-tag";
     }
 
@@ -221,36 +249,37 @@
             document.getElementById("nagadBal").innerText = "৳ " + pBal.Nagad;
             document.getElementById("bankBal").innerText = "৳ " + pBal.Bank;
 
-            let list = document.getElementById("transactionList"); list.innerHTML = "";
+            let recent = document.getElementById("recentList"); recent.innerHTML = "";
             (data.recent || []).slice(0,3).forEach(item => {
                 let cls = item.type == "Income" ? "green" : "red";
-                list.innerHTML += `<div class="item" style="padding:12px;"><div><h4>${item.category}</h4><p style="font-size:10px;">${item.payment}</p></div><div class="amount ${cls}">৳ ${item.amount}</div></div>`;
+                recent.innerHTML += `
+                    <div class="activity-item">
+                        <div class="activity-info">
+                            <h4>${item.category}</h4>
+                            <p>${item.payment} • ${item.date}</p>
+                        </div>
+                        <div class="activity-amount ${cls}">৳ ${item.amount}</div>
+                    </div>`;
             });
 
             let history = document.getElementById("historyList"); history.innerHTML = "";
             (data.recent || []).forEach((item) => {
-                let cls = item.type == "Income" ? "green" : "red";
                 history.innerHTML += `
                     <div class="item">
                         <div style="flex:1">
-                            <h4 style="font-size: 14px; margin-bottom: 4px;">${item.category}</h4>
-                            <p style="font-size: 11px; color: var(--sub); margin-bottom: 12px;">${item.date}</p>
-                            <div style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center;">
-                                <span class="${getPayTagClass(item.payment)}">${item.payment}</span>
-                                ${item.person ? `<span class="person-tag">👤 ${item.person}</span>` : ''}
-                            </div>
-                            ${item.note ? `<div class="note-box"><p>${item.note}</p></div>` : ''}
+                            <h4>${item.category}</h4>
+                            <p style="font-size:11px; color:var(--sub);">${item.date}</p>
+                            <span class="${getPayTagClass(item.payment)}">${item.payment}</span>
+                            ${item.person ? `<span class="person-tag">👤 ${item.person}</span>` : ''}
                         </div>
-                        <div style="text-align:right">
-                            <div class="amount ${cls}">৳ ${item.amount}</div>
-                        </div>
+                        <div class="amount ${item.type == "Income" ? "green" : "red"}">৳ ${item.amount}</div>
                     </div>`;
             });
 
             let recVal = data.receive || 0; let payVal = data.pay || 0;
             document.getElementById("receiveAmount").innerText = "৳ " + Math.abs(recVal);
             document.getElementById("payAmount").innerText = "৳ " + Math.abs(payVal);
-            document.getElementById("loanStatus").innerText = "৳ " + Math.abs(recVal - payVal);
+            document.getElementById("loanStatus").innerText = "৳ " + (recVal - payVal);
 
             let loanSummary = document.getElementById("loanSummaryList"); loanSummary.innerHTML = "";
             let loanMap = {};
@@ -264,20 +293,9 @@
             });
             for(let k in loanMap){
                 if(loanMap[k].bal == 0) continue;
-                let isRec = loanMap[k].bal > 0;
-                loanSummary.innerHTML += `<div class="item"><div><h4>${loanMap[k].name}</h4><p>${isRec ? 'Will Receive' : 'Need To Pay'}</p></div><div class="amount ${isRec ? 'green' : 'red'}">৳ ${Math.abs(loanMap[k].bal)}</div></div>`;
+                loanSummary.innerHTML += `<div class="activity-item"><div><h4>${loanMap[k].name}</h4><p>${loanMap[k].bal > 0 ? 'Receive' : 'Pay'}</p></div><div class="activity-amount ${loanMap[k].bal > 0 ? 'green' : 'red'}">৳ ${Math.abs(loanMap[k].bal)}</div></div>`;
             }
         });
-    }
-
-    function refreshNow(){
-        const icon = document.getElementById("refreshIcon");
-        icon.classList.add("spinning");
-        setTimeout(() => icon.classList.remove("spinning"), 800);
-        document.getElementById("amount").value = "";
-        document.getElementById("note").value = "";
-        document.getElementById("person").value = "";
-        loadDashboard();
     }
 
     function filterHistory(){
