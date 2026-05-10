@@ -1,15 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
+
 <meta name="viewport"
 content="width=device-width,
-initial-scale=1,
-maximum-scale=1,
+initial-scale=1.0,
+maximum-scale=1.0,
 user-scalable=no">
+
 <title>Expense Tracker</title>
+
 <link rel="preconnect"
 href="https://fonts.googleapis.com">
+
 <link rel="preconnect"
 href="https://fonts.gstatic.com"
 crossorigin>
@@ -19,8 +25,23 @@ rel="stylesheet">
 
 <style>
 
-html{
--webkit-text-size-adjust:100%;
+:root{
+--bg:#f4f7fb;
+--card:#ffffff;
+--text:#111827;
+--sub:#6b7280;
+--blue:#2563eb;
+--green:#16a34a;
+--red:#ef4444;
+--border:#e5e7eb;
+}
+
+.dark{
+--bg:#081120;
+--card:#162033;
+--text:#ffffff;
+--sub:#cbd5e1;
+--border:#253045;
 }
 
 *{
@@ -32,10 +53,10 @@ font-family:'Inter',sans-serif;
 }
 
 body{
-background:#f5f7fb;
+background:var(--bg);
+color:var(--text);
 padding:18px 18px 110px;
-color:#111827;
-font-size:14px;
+transition:.3s;
 }
 
 .container{
@@ -50,87 +71,84 @@ align-items:center;
 margin-bottom:18px;
 }
 
-h1{
-font-size:22px;
+.logo{
+font-size:24px;
 font-weight:700;
 }
 
-.toggle-btn{
-background:#2563eb;
-color:white;
+.header-right{
+display:flex;
+gap:10px;
+}
+
+.icon-btn{
 border:none;
-padding:10px 14px;
-border-radius:12px;
+background:var(--card);
+padding:11px 14px;
+border-radius:14px;
 cursor:pointer;
-font-size:13px;
+font-size:14px;
 font-weight:600;
+color:var(--text);
+box-shadow:0 2px 10px rgba(0,0,0,.05);
 }
 
 .month{
-margin-bottom:18px;
 font-size:13px;
-color:#6b7280;
+color:var(--sub);
+margin-bottom:16px;
 }
 
 .top{
 display:grid;
-grid-template-columns:1fr 1fr;
+grid-template-columns:repeat(3,1fr);
 gap:12px;
 margin-bottom:18px;
 }
 
-.top div{
+.stat{
+background:var(--card);
 padding:16px;
-border-radius:16px;
-box-shadow:0 2px 8px rgba(0,0,0,0.05);
+border-radius:20px;
+box-shadow:0 2px 10px rgba(0,0,0,.04);
 }
 
-.top h3{
+.stat h4{
 font-size:12px;
 margin-bottom:6px;
+color:var(--sub);
 }
 
-.top h2{
-font-size:17px;
+.stat h2{
+font-size:18px;
 font-weight:700;
+word-break:break-word;
 }
 
-.top div:nth-child(1){
-background:#ecfdf5;
-color:#16a34a;
+.green{
+color:var(--green);
 }
 
-.top div:nth-child(2){
-background:#fef2f2;
-color:#ef4444;
+.red{
+color:var(--red);
 }
 
-.top div:nth-child(3){
-background:#eff6ff;
-color:#2563eb;
-}
-
-.top div:nth-child(4){
-background:#fffbeb;
-color:#d97706;
-}
-
-.top div:nth-child(5){
-background:#f5f3ff;
-color:#7c3aed;
-}
-
-.top div:nth-child(6){
-background:#f0f9ff;
-color:#0284c7;
+.blue{
+color:var(--blue);
 }
 
 .card{
-background:white;
+background:var(--card);
 padding:18px;
-border-radius:18px;
-box-shadow:0 2px 10px rgba(0,0,0,0.05);
+border-radius:22px;
 margin-bottom:18px;
+box-shadow:0 2px 10px rgba(0,0,0,.04);
+}
+
+.card-title{
+font-size:16px;
+font-weight:700;
+margin-bottom:16px;
 }
 
 .grid{
@@ -142,46 +160,49 @@ input,
 select,
 textarea{
 width:100%;
-padding:13px;
-border:1px solid #d1d5db;
-border-radius:14px;
+padding:14px;
+border:1px solid var(--border);
+background:transparent;
+border-radius:16px;
 font-size:14px;
 outline:none;
-background:white;
+color:var(--text);
 }
 
-button{
-background:#2563eb;
+textarea{
+min-height:80px;
+resize:none;
+}
+
+.save-btn{
+background:var(--blue);
 color:white;
-padding:13px;
 border:none;
-border-radius:14px;
-cursor:pointer;
-font-size:14px;
+padding:14px;
+border-radius:16px;
+font-size:15px;
 font-weight:600;
+cursor:pointer;
 }
 
-.transaction,
-.history-item{
-background:#f9fafb;
-padding:12px;
-border-radius:14px;
+.item{
+background:var(--bg);
+padding:14px;
+border-radius:18px;
 display:flex;
 justify-content:space-between;
 align-items:center;
-margin-top:10px;
+margin-top:12px;
 }
 
-.transaction h4,
-.history-item h4{
+.item h4{
 font-size:14px;
 margin-bottom:4px;
 }
 
-.transaction p,
-.history-item p{
+.item p{
 font-size:12px;
-color:#64748b;
+color:var(--sub);
 }
 
 .amount{
@@ -189,121 +210,84 @@ font-size:15px;
 font-weight:700;
 }
 
-.income{
-color:#16a34a;
-}
-
-.expense{
-color:#ef4444;
-}
-
 .page{
 display:none;
 }
 
-.active-page{
+.active{
 display:block;
 }
 
 .bottom-nav{
 position:fixed;
-bottom:15px;
 left:50%;
+bottom:16px;
 transform:translateX(-50%);
 width:92%;
-max-width:420px;
-background:white;
+max-width:430px;
+background:var(--card);
+padding:10px;
+border-radius:24px;
 display:flex;
 justify-content:space-around;
-padding:10px;
-border-radius:22px;
-box-shadow:0 8px 25px rgba(0,0,0,0.12);
+box-shadow:0 8px 25px rgba(0,0,0,.12);
 z-index:999;
 }
 
 .nav-btn{
-background:none !important;
 border:none;
+background:none;
+padding:10px 16px;
+border-radius:18px;
 display:flex;
 flex-direction:column;
 align-items:center;
 gap:4px;
-font-size:11px !important;
-color:#64748b !important;
-padding:8px 14px !important;
-border-radius:16px;
-min-width:80px;
+font-size:11px;
+font-weight:600;
+color:var(--sub);
+cursor:pointer;
+min-width:82px;
 }
 
-.nav-btn.active{
-background:#2563eb !important;
-color:white !important;
+.nav-btn.active-nav{
+background:var(--blue);
+color:white;
 }
 
-#toast{
+.loan-box{
+background:var(--bg);
+padding:16px;
+border-radius:18px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-top:12px;
+}
+
+.loan-box h4{
+font-size:15px;
+}
+
+.toast{
 position:fixed;
-bottom:90px;
+bottom:95px;
 left:50%;
 transform:translateX(-50%);
-background:#16a34a;
+background:var(--green);
 color:white;
 padding:12px 18px;
-border-radius:12px;
+border-radius:14px;
 font-size:13px;
 font-weight:600;
 opacity:0;
 pointer-events:none;
-transition:0.3s;
-z-index:999;
+transition:.3s;
 }
 
-#toast.show{
+.toast.show{
 opacity:1;
-bottom:110px;
-}
-
-.dark{
-background:#081225;
-color:white;
-}
-
-.dark .card,
-.dark .bottom-nav,
-.dark .transaction,
-.dark .history-item{
-background:#1e293b;
-color:white;
-}
-
-.dark input,
-.dark select,
-.dark textarea{
-background:#0f172a;
-border:1px solid #334155;
-color:white;
-}
-
-.dark option{
-background:#0f172a;
-color:white;
-}
-
-.dark .month,
-.dark p{
-color:#cbd5e1 !important;
-}
-
-.dark .top div{
-background:#1e293b !important;
-}
-
-.dark .nav-btn{
-color:#cbd5e1 !important;
-}
-
-.dark .nav-btn.active{
-background:#2563eb !important;
-color:white !important;
+bottom:115px;
 }
 
 </style>
@@ -314,19 +298,34 @@ color:white !important;
 
 <div class="container">
 
-<div id="dashboardPage"
-class="page active-page">
+<!-- DASHBOARD -->
+
+<div id="dashboard"
+class="page active">
 
 <div class="header">
 
-<h1>Expense Tracker</h1>
+<div class="logo">
+Expense Tracker
+</div>
 
-<button class="toggle-btn"
-onclick="toggleDarkMode()">
+<div class="header-right">
 
-Mode
+<button class="icon-btn"
+onclick="refreshNow()">
+
+⟳
 
 </button>
+
+<button class="icon-btn"
+onclick="toggleDark()">
+
+🌙
+
+</button>
+
+</div>
 
 </div>
 
@@ -335,39 +334,56 @@ id="monthName"></div>
 
 <div class="top">
 
-<div>
-<h3>Total Income</h3>
-<h2 id="income">৳ 0</h2>
-</div>
+<div class="stat">
 
-<div>
-<h3>Total Expense</h3>
-<h2 id="expense">৳ 0</h2>
-</div>
+<h4>Total Income</h4>
 
-<div>
-<h3>Balance</h3>
-<h2 id="balance">৳ 0</h2>
-</div>
+<h2 class="green"
+id="income">
 
-<div>
-<h3>You Will Receive</h3>
-<h2 id="receiveAmount">৳ 0</h2>
-</div>
+৳ 0
 
-<div>
-<h3>You Need To Pay</h3>
-<h2 id="payAmount">৳ 0</h2>
-</div>
-
-<div>
-<h3>Loan Status</h3>
-<h2 id="loanStatus">৳ 0</h2>
-</div>
+</h2>
 
 </div>
+
+<div class="stat">
+
+<h4>Total Expense</h4>
+
+<h2 class="red"
+id="expense">
+
+৳ 0
+
+</h2>
+
+</div>
+
+<div class="stat">
+
+<h4>Current Balance</h4>
+
+<h2 class="blue"
+id="balance">
+
+৳ 0
+
+</h2>
+
+</div>
+
+</div>
+
+<!-- FORM -->
 
 <div class="card">
+
+<div class="card-title">
+
+Add Transaction
+
+</div>
 
 <div class="grid">
 
@@ -378,11 +394,11 @@ onchange="updateCategory()">
 Select Type
 </option>
 
-<option value="Income">
+<option>
 Income
 </option>
 
-<option value="Expense">
+<option>
 Expense
 </option>
 
@@ -417,7 +433,8 @@ style="display:none;">
 <textarea id="note"
 placeholder="Write Note"></textarea>
 
-<button id="saveBtn"
+<button class="save-btn"
+id="saveBtn"
 onclick="saveData()">
 
 Save Entry
@@ -428,11 +445,15 @@ Save Entry
 
 </div>
 
+<!-- RECENT -->
+
 <div class="card">
 
-<h3 style="margin-bottom:12px;">
+<div class="card-title">
+
 Recent Transactions
-</h3>
+
+</div>
 
 <div id="transactionList"></div>
 
@@ -440,14 +461,18 @@ Recent Transactions
 
 </div>
 
-<div id="historyPage"
+<!-- HISTORY -->
+
+<div id="history"
 class="page">
 
 <div class="card">
 
-<h3 style="margin-bottom:14px;">
+<div class="card-title">
+
 Transaction History
-</h3>
+
+</div>
 
 <input type="text"
 id="searchInput"
@@ -460,14 +485,63 @@ onkeyup="filterHistory()">
 
 </div>
 
-<div id="loanPage"
+<!-- LOANS -->
+
+<div id="loans"
 class="page">
 
 <div class="card">
 
-<h3 style="margin-bottom:14px;">
+<div class="card-title">
+
 Loan Summary
-</h3>
+
+</div>
+
+<div class="loan-box">
+
+<h4>
+You Will Receive
+</h4>
+
+<div class="amount green"
+id="receiveAmount">
+
+৳ 0
+
+</div>
+
+</div>
+
+<div class="loan-box">
+
+<h4>
+You Need To Pay
+</h4>
+
+<div class="amount red"
+id="payAmount">
+
+৳ 0
+
+</div>
+
+</div>
+
+<div class="loan-box">
+
+<h4>
+Loan Status
+</h4>
+
+<div class="amount blue"
+id="loanStatus">
+
+৳ 0
+
+</div>
+
+</div>
 
 <div id="loanSummaryList"></div>
 
@@ -477,42 +551,52 @@ Loan Summary
 
 </div>
 
+<!-- NAV -->
+
 <div class="bottom-nav">
 
-<button class="nav-btn active"
+<button class="nav-btn active-nav"
 onclick="
-showPage('dashboardPage');
+showPage('dashboard');
 setActive(this)
 ">
 
+🏠
 Home
 
 </button>
 
 <button class="nav-btn"
 onclick="
-showPage('historyPage');
+showPage('history');
 setActive(this)
 ">
 
+📜
 History
 
 </button>
 
 <button class="nav-btn"
 onclick="
-showPage('loanPage');
+showPage('loans');
 setActive(this)
 ">
 
+💰
 Loans
 
 </button>
 
 </div>
 
-<div id="toast">
+<!-- TOAST -->
+
+<div class="toast"
+id="toast">
+
 Saved Successfully
+
 </div>
 
 <script>
@@ -520,8 +604,11 @@ Saved Successfully
 const SCRIPT_URL =
 "https://script.google.com/macros/s/AKfycbxA3FVbmfnbYjPJHd6QmgWbZp2fe3MGtiVX9jWHJ6xBNzk4HYQJH0_5XZalXrba8c3YFg/exec";
 
-document.getElementById("monthName")
-.innerText =
+// MONTH
+
+document.getElementById(
+"monthName"
+).innerText =
 new Date().toLocaleString(
 'default',
 {
@@ -530,49 +617,66 @@ year:'numeric'
 }
 );
 
-function toggleDarkMode(){
-document.body.classList.toggle("dark");
+// DARK MODE
+
+function toggleDark(){
+
+document.body.classList.toggle(
+"dark"
+);
+
 }
 
-function showPage(pageId){
+// NAV
+
+function showPage(id){
 
 document
-.querySelectorAll('.page')
+.querySelectorAll(".page")
 .forEach(page => {
 
 page.classList.remove(
-'active-page'
+"active"
 );
 
 });
 
-document.getElementById(pageId)
-.classList.add('active-page');
+document.getElementById(id)
+.classList.add("active");
 
 }
 
-function setActive(button){
+function setActive(btn){
 
 document
-.querySelectorAll('.nav-btn')
-.forEach(btn => {
+.querySelectorAll(".nav-btn")
+.forEach(button => {
 
-btn.classList.remove('active');
+button.classList.remove(
+"active-nav"
+);
 
 });
 
-button.classList.add('active');
+btn.classList.add(
+"active-nav"
+);
 
 }
+
+// CATEGORY
 
 function updateCategory(){
 
 let type =
-document.getElementById("type")
-.value;
+document.getElementById(
+"type"
+).value;
 
 let category =
-document.getElementById("category");
+document.getElementById(
+"category"
+);
 
 category.innerHTML = "";
 
@@ -593,24 +697,31 @@ options = [
 
 }
 
-else if(type == "Expense"){
+if(type == "Expense"){
 
 options = [
-"Peraonal",
+
+"Personal",
 "Family",
 "Home Expense",
 "DPS Payment",
 "Give Loan",
-"Loan Paid",
+"Loan Paid"
+
 ];
+
 }
+
 options.forEach(item => {
 
 let option =
-document.createElement("option");
+document.createElement(
+"option"
+);
+
+option.text = item;
 
 option.value = item;
-option.text = item;
 
 category.appendChild(option);
 
@@ -618,14 +729,23 @@ category.appendChild(option);
 
 }
 
-document.getElementById("category")
-.addEventListener("change",function(){
+// PERSON FIELD
+
+document.getElementById(
+"category"
+).addEventListener(
+"change",
+function(){
 
 let person =
-document.getElementById("person");
+document.getElementById(
+"person"
+);
 
 let payment =
-document.getElementById("payment");
+document.getElementById(
+"payment"
+);
 
 if(
 [
@@ -646,59 +766,54 @@ else{
 person.style.display =
 "none";
 
-person.value = "";
+}
+
+if(this.value ==
+"DPS Payment"){
+
+payment.value =
+"Bkash";
 
 }
 
-if(this.value == "DPS Payment"){
-
-payment.value = "Bkash";
-
 }
+);
 
-});
+// TOAST
 
-function showToast(){
+function showToast(msg){
 
 let toast =
-document.getElementById("toast");
+document.getElementById(
+"toast"
+);
 
-toast.innerText =
-"Saved Successfully";
+toast.innerText = msg;
 
-toast.classList.add("show");
+toast.classList.add(
+"show"
+);
 
 setTimeout(() => {
 
-toast.classList.remove("show");
+toast.classList.remove(
+"show"
+);
 
 },2000);
 
 }
 
-function showToastMessage(msg){
-
-let toast =
-document.getElementById("toast");
-
-toast.innerText = msg;
-
-toast.classList.add("show");
-
-setTimeout(() => {
-
-toast.classList.remove("show");
-
-},1500);
-
-}
+// SAVE
 
 function saveData(){
 
-let saveBtn =
-document.getElementById("saveBtn");
+let btn =
+document.getElementById(
+"saveBtn"
+);
 
-saveBtn.innerText =
+btn.innerText =
 "Saving...";
 
 let data = {
@@ -707,45 +822,36 @@ date:
 new Date().toLocaleString(),
 
 type:
-document.getElementById("type")
-.value,
+document.getElementById(
+"type"
+).value,
 
 category:
-document.getElementById("category")
-.value,
+document.getElementById(
+"category"
+).value,
 
 payment:
-document.getElementById("payment")
-.value,
+document.getElementById(
+"payment"
+).value,
 
 amount:
-document.getElementById("amount")
-.value,
+document.getElementById(
+"amount"
+).value,
 
 person:
-document.getElementById("person")
-.value,
+document.getElementById(
+"person"
+).value,
 
 note:
-document.getElementById("note")
-.value
+document.getElementById(
+"note"
+).value
 
 };
-
-if(
-!data.type ||
-!data.category ||
-!data.amount
-){
-
-alert("Fill Required Fields");
-
-saveBtn.innerText =
-"Save Entry";
-
-return;
-
-}
 
 fetch(SCRIPT_URL,{
 
@@ -759,19 +865,20 @@ body:JSON.stringify(data)
 
 .then(() => {
 
-saveBtn.innerText =
+btn.innerText =
 "Save Entry";
 
-document.getElementById("amount")
-.value = "";
+document.getElementById(
+"amount"
+).value = "";
 
-document.getElementById("note")
-.value = "";
+document.getElementById(
+"note"
+).value = "";
 
-document.getElementById("person")
-.value = "";
-
-showToast();
+showToast(
+"Saved Successfully"
+);
 
 loadDashboard();
 
@@ -779,7 +886,7 @@ loadDashboard();
 
 .catch(() => {
 
-saveBtn.innerText =
+btn.innerText =
 "Save Entry";
 
 alert("Save Failed");
@@ -787,6 +894,8 @@ alert("Save Failed");
 });
 
 }
+
+// LOAD
 
 function loadDashboard(){
 
@@ -796,28 +905,39 @@ fetch(SCRIPT_URL)
 
 .then(data => {
 
-document.getElementById("income")
-.innerText =
-"৳ " + (data.income || 0);
+document.getElementById(
+"income"
+).innerText =
+"৳ " +
+(data.income || 0);
 
-document.getElementById("expense")
-.innerText =
-"৳ " + (data.expense || 0);
+document.getElementById(
+"expense"
+).innerText =
+"৳ " +
+(data.expense || 0);
 
-document.getElementById("balance")
-.innerText =
-"৳ " + (data.balance || 0);
+document.getElementById(
+"balance"
+).innerText =
+"৳ " +
+(data.balance || 0);
 
-document.getElementById("receiveAmount")
-.innerText =
-"৳ " + (data.receive || 0);
+document.getElementById(
+"receiveAmount"
+).innerText =
+"৳ " +
+(data.receive || 0);
 
-document.getElementById("payAmount")
-.innerText =
-"৳ " + (data.pay || 0);
+document.getElementById(
+"payAmount"
+).innerText =
+"৳ " +
+(data.pay || 0);
 
-document.getElementById("loanStatus")
-.innerText =
+document.getElementById(
+"loanStatus"
+).innerText =
 "৳ " +
 (
 (data.receive || 0)
@@ -825,25 +945,28 @@ document.getElementById("loanStatus")
 (data.pay || 0)
 );
 
-let transactionList =
+// RECENT
+
+let list =
 document.getElementById(
 "transactionList"
 );
 
-transactionList.innerHTML = "";
+list.innerHTML = "";
 
 (data.recent || [])
 .slice(0,3)
 .forEach(item => {
 
 let cls =
-item.type == "Income"
-? "income"
-: "expense";
+item.type ==
+"Income"
+? "green"
+: "red";
 
-transactionList.innerHTML += `
+list.innerHTML += `
 
-<div class="transaction">
+<div class="item">
 
 <div>
 
@@ -858,7 +981,9 @@ ${item.date}
 </div>
 
 <div class="amount ${cls}">
+
 ৳ ${item.amount}
+
 </div>
 
 </div>
@@ -867,24 +992,27 @@ ${item.date}
 
 });
 
-let historyList =
+// HISTORY
+
+let history =
 document.getElementById(
 "historyList"
 );
 
-historyList.innerHTML = "";
+history.innerHTML = "";
 
 (data.recent || [])
 .forEach(item => {
 
 let cls =
-item.type == "Income"
-? "income"
-: "expense";
+item.type ==
+"Income"
+? "green"
+: "red";
 
-historyList.innerHTML += `
+history.innerHTML += `
 
-<div class="history-item">
+<div class="item history-item">
 
 <div>
 
@@ -899,7 +1027,9 @@ ${item.date}
 </div>
 
 <div class="amount ${cls}">
+
 ৳ ${item.amount}
+
 </div>
 
 </div>
@@ -907,6 +1037,8 @@ ${item.date}
 `;
 
 });
+
+// LOAN SUMMARY
 
 let loanSummary =
 document.getElementById(
@@ -936,46 +1068,89 @@ loanMap[item.person] = 0;
 
 }
 
+// GIVE LOAN
+
 if(item.category == "Give Loan"){
-loanMap[item.person] += Number(item.amount);
+
+loanMap[item.person] +=
+Number(item.amount);
+
 }
+
+// LOAN RECEIVED
 
 if(item.category == "Loan Received"){
-loanMap[item.person] -= Number(item.amount);
+
+loanMap[item.person] -=
+Number(item.amount);
+
 }
+
+// TAKE LOAN
 
 if(item.category == "Take Loan"){
-loanMap[item.person] -= Number(item.amount);
+
+loanMap[item.person] -=
+Number(item.amount);
+
 }
 
+// LOAN PAID
+
 if(item.category == "Loan Paid"){
-loanMap[item.person] += Number(item.amount);
+
+loanMap[item.person] +=
+Number(item.amount);
+
 }
 
 }
 
 });
 
+// SHOW ONLY NON ZERO
+
 for(let person in loanMap){
 
 let amount =
 loanMap[person];
 
+if(amount == 0){
+
+continue;
+
+}
+
 let cls =
-amount >= 0
-? "income"
-: "expense";
+amount > 0
+? "green"
+: "red";
+
+let status =
+amount > 0
+? "You Will Receive"
+: "You Need To Pay";
 
 loanSummary.innerHTML += `
 
-<div class="history-item">
+<div class="item">
 
 <div>
-<h4>${person}</h4>
+
+<h4>
+${person}
+</h4>
+
+<p>
+${status}
+</p>
+
 </div>
 
 <div class="amount ${cls}">
-৳ ${amount}
+
+৳ ${Math.abs(amount)}
+
 </div>
 
 </div>
@@ -988,6 +1163,8 @@ loanSummary.innerHTML += `
 
 }
 
+// SEARCH
+
 function filterHistory(){
 
 let value =
@@ -998,7 +1175,9 @@ document.getElementById(
 .toLowerCase();
 
 document
-.querySelectorAll(".history-item")
+.querySelectorAll(
+".history-item"
+)
 .forEach(item => {
 
 item.style.display =
@@ -1012,41 +1191,25 @@ item.innerText
 
 }
 
-/* PULL TO REFRESH */
+// REFRESH
 
-let touchStartY = 0;
+function refreshNow(){
 
-document.addEventListener(
-'touchstart',
-e => {
-
-touchStartY =
-e.touches[0].clientY;
-
-}
+showToast(
+"Refreshing..."
 );
-
-document.addEventListener(
-'touchend',
-e => {
-
-let touchEndY =
-e.changedTouches[0].clientY;
-
-if(
-touchEndY - touchStartY > 120
-){
 
 loadDashboard();
 
-showToastMessage(
-"Refreshed"
-);
-
 }
 
-}
-);
+setInterval(() => {
+
+loadDashboard();
+
+},15000);
+
+// INIT
 
 loadDashboard();
 
