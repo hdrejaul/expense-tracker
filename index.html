@@ -8,130 +8,156 @@
 
     <style>
         :root {
-            --bg: #f4f7fb; --card: #ffffff; --text: #111827; --sub: #6b7280;
-            --blue: #2563eb; --green: #16a34a; --red: #ef4444; --border: #e5e7eb;
-            --note-bg: #f1f5f9; --note-border: #3b82f6;
+            /* Luxury Light Mode */
+            --bg: #f8fafc; --card: #ffffff; --text: #0f172a; --sub: #64748b;
+            --blue: #2563eb; --green: #10b981; --red: #ef4444; 
+            --border: rgba(226, 232, 240, 0.8);
+            --item-bg: #ffffff;
             --bkash: #d12053; --nagad: #f7941d; --bank: #006747;
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.04);
         }
 
         body.dark-mode {
-            --bg: #081120; --card: #162033; --text: #ffffff; --sub: #cbd5e1; --border: #253045;
-            --note-bg: #1e293b; --note-border: #60a5fa;
+            --bg: #020617; --card: #0f172a; --text: #f8fafc; --sub: #94a3b8; 
+            --border: #1e293b; --item-bg: #111a2e;
+            --shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; -webkit-tap-highlight-color: transparent; }
-        
-        body { background: var(--bg); color: var(--text); padding: 18px 18px 110px; transition: .3s; }
-        .container { max-width: 720px; margin: auto; }
-        
-        /* Header */
-        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-        .logo { font-size: 20px; font-weight: 800; color: var(--blue); }
-        .refresh-fab { border: none; background: var(--blue); color: white; width: 40px; height: 40px; border-radius: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; transition: 0.3s; }
-        
-        /* 🔥 Refresh Animation Logic 🔥 */
-        .refresh-fab span { display: inline-block; transition: 0.8s ease-in-out; }
-        .spinning span { transform: rotate(360deg); }
+        body { background: var(--bg); color: var(--text); padding: 18px 18px 110px; transition: all 0.3s ease; }
+        .container { max-width: 500px; margin: auto; }
 
-        /* Wallet Cards */
-        .wallet-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 20px; }
-        .wallet-card { background: var(--card); padding: 16px; border-radius: 16px; border: 1px solid var(--border); }
-        .wallet-card h4 { font-size: 9px; color: var(--sub); text-transform: uppercase; margin-bottom: 4px; font-weight: 700; }
-        .wallet-card h2 { font-size: 14px; font-weight: 700; }
+        .page { display: none; }
+        .page.active { display: block; animation: fadeIn 0.2s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Header */
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
+        .logo { font-size: 22px; font-weight: 800; color: var(--blue); }
+        .header-actions { display: flex; gap: 10px; }
+        .icon-btn { border: none; background: var(--card); color: var(--text); width: 42px; height: 42px; border-radius: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; border: 1px solid var(--border); box-shadow: var(--shadow); font-size: 18px; transition: 0.3s; }
+
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        .spinning span { display: inline-block; animation: spin 0.8s linear infinite; }
+
+        /* 🔥 Minimalist Wallet Style 🔥 */
+        .wallet-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 22px; }
+        .wallet-card { 
+            background: var(--card); padding: 12px 16px; border-radius: 16px; 
+            border: 1px solid var(--border); box-shadow: var(--shadow); 
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .wallet-info h4 { font-size: 9px; color: var(--sub); text-transform: uppercase; font-weight: 700; margin-bottom: 2px; }
+        .wallet-info h2 { font-size: 14px; font-weight: 700; }
+        .wallet-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--blue); }
 
         /* Stats */
-        .top-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; }
-        .stat-box { background: var(--card); padding: 14px 8px; border-radius: 16px; border: 1px solid var(--border); text-align: center; }
-        .stat-box h4 { font-size: 9px; color: var(--sub); text-transform: uppercase; margin-bottom: 4px; }
-        .stat-box h2 { font-size: 13px; font-weight: 700; }
+        .main-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 25px; }
+        .stat-box { background: var(--card); padding: 16px 5px; border-radius: 20px; border: 1px solid var(--border); text-align: center; box-shadow: var(--shadow); }
+        .stat-box h4 { font-size: 10px; color: var(--sub); text-transform: uppercase; margin-bottom: 4px; font-weight: 700; }
+        .stat-box h2 { font-size: 13px; font-weight: 800; }
 
-        /* Entry Card */
-        .card { background: var(--card); padding: 22px; border-radius: 24px; margin-bottom: 20px; border: 1px solid var(--border); }
-        .card-title { font-size: 17px; font-weight: 700; margin-bottom: 15px; }
+        /* Form Card */
+        .card { background: var(--card); padding: 24px; border-radius: 28px; margin-bottom: 25px; border: 1px solid var(--border); box-shadow: var(--shadow); }
+        .card-title { font-size: 18px; font-weight: 800; margin-bottom: 18px; }
 
-        input, select, textarea { width: 100%; padding: 13px; border: 1px solid var(--border); background: var(--bg); border-radius: 12px; font-size: 14px; color: var(--text); outline: none; margin-bottom: 10px; }
-        .save-btn { background: var(--blue); color: white; border: none; padding: 15px; border-radius: 12px; font-size: 15px; font-weight: 700; cursor: pointer; width: 100%; transition: 0.2s; }
-        .save-btn:active { transform: scale(0.98); }
+        input, select, textarea { width: 100%; padding: 14px; border: 1px solid var(--border); background: var(--bg); border-radius: 14px; font-size: 14px; color: var(--text); outline: none; margin-bottom: 14px; font-weight: 500; }
+        .save-btn { background: linear-gradient(135deg, #2563eb, #1d4ed8); color: white; border: none; padding: 18px; border-radius: 18px; font-size: 16px; font-weight: 700; cursor: pointer; width: 100%; transition: 0.3s; box-shadow: 0 8px 20px rgba(37, 99, 235, 0.25); }
 
-        /* 🔥 Activity Card Design (১১৯২০ স্ক্রিনশট অনুযায়ী) 🔥 */
-        .activity-card { background: var(--card); padding: 22px; border-radius: 24px; margin-bottom: 20px; border: 1px solid var(--border); }
-        .activity-item { background: var(--card); padding: 15px; border-radius: 18px; margin-bottom: 10px; border: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
-        .activity-info h4 { font-size: 14px; font-weight: 700; }
-        .activity-info p { font-size: 11px; color: var(--sub); margin-top: 2px; }
-        .activity-amount { font-size: 15px; font-weight: 800; }
+        /* Recent Activity & History Card Style */
+        .activity-card { background: var(--card); padding: 22px; border-radius: 28px; margin-bottom: 20px; border: 1px solid var(--border); box-shadow: var(--shadow); }
+        .activity-item { 
+            background: var(--card); padding: 15px; border-radius: 18px; 
+            margin-bottom: 10px; border: 1px solid var(--border); 
+            display: flex; justify-content: space-between; align-items: center; 
+            box-shadow: var(--shadow);
+        }
+        .activity-info h4 { font-size: 15px; font-weight: 700; margin-bottom: 2px; }
+        .activity-info p { font-size: 11px; color: var(--sub); }
+        .activity-info span { font-size: 10px; color: var(--blue); font-weight: 600; text-transform: uppercase; }
 
-        /* General Item (History) */
-        .item { background: var(--card); padding: 18px; border-radius: 22px; margin-top: 12px; border: 1px solid var(--border); display: flex; justify-content: space-between; align-items: flex-start; }
-        .pay-tag { color: white; font-size: 9px; padding: 3px 12px; border-radius: 20px; font-weight: 700; text-transform: uppercase; display: inline-block; margin-top: 8px; background: #475569; }
+        /* Tags */
+        .pay-tag { color: white; font-size: 9px; padding: 4px 12px; border-radius: 8px; font-weight: 700; text-transform: uppercase; display: inline-block; margin-top: 10px; background: #64748b; }
         .pay-tag.bkash { background: var(--bkash); }
         .pay-tag.nagad { background: var(--nagad); }
         .pay-tag.bank { background: var(--bank); }
-        .person-tag { background: #e2e8f0; color: #475569; font-size: 9px; padding: 3px 12px; border-radius: 20px; font-weight: 700; margin-left: 5px; }
+        .person-tag { background: rgba(37, 99, 235, 0.1); color: var(--blue); font-size: 9px; padding: 4px 14px; border-radius: 10px; font-weight: 700; margin-left: 6px; }
 
         /* Nav */
-        .bottom-nav { position: fixed; left: 50%; bottom: 16px; transform: translateX(-50%); width: 92%; max-width: 430px; background: var(--card); padding: 10px; border-radius: 24px; display: flex; justify-content: space-around; box-shadow: 0 8px 25px rgba(0,0,0,.1); z-index: 999; border: 1px solid var(--border); }
-        .nav-btn { border: none; background: none; padding: 8px 14px; border-radius: 16px; display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: 11px; font-weight: 700; color: var(--sub); cursor: pointer; }
-        .nav-btn.active-nav { background: var(--blue); color: white; }
+        .bottom-nav { position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%); width: 92%; max-width: 430px; background: var(--card); padding: 10px; border-radius: 30px; display: flex; justify-content: space-around; box-shadow: 0 15px 35px rgba(0,0,0,0.1); z-index: 999; border: 1px solid var(--border); }
+        .nav-btn { border: none; background: none; padding: 12px 20px; border-radius: 20px; display: flex; flex-direction: column; align-items: center; gap: 5px; font-size: 11px; font-weight: 700; color: var(--sub); cursor: pointer; flex: 1; transition: 0.3s; }
+        .nav-btn.active-nav { background: var(--blue); color: white; box-shadow: 0 8px 15px rgba(37, 99, 235, 0.3); }
 
-        /* Toast */
-        #toast { visibility: hidden; min-width: 200px; background: var(--green); color: white; text-align: center; border-radius: 50px; padding: 12px; position: fixed; z-index: 1000; left: 50%; bottom: 100px; transform: translateX(-50%); font-weight: 700; }
-        #toast.show { visibility: visible; animation: fadeInUp 0.4s forwards; }
+        #toast { visibility: hidden; min-width: 250px; background: #10b981; color: white; text-align: center; border-radius: 50px; padding: 16px; position: fixed; z-index: 1000; left: 50%; bottom: 100px; transform: translateX(-50%); font-weight: 700; box-shadow: 0 10px 30px rgba(16, 185, 129, 0.3); }
+        #toast.show { visibility: visible; animation: fadeInUp 0.4s forwards, fadeOut 0.4s 2.5s forwards; }
         @keyframes fadeInUp { from { opacity: 0; bottom: 80px; } to { opacity: 1; bottom: 100px; } }
+        @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
 
         .green { color: var(--green); } .red { color: var(--red); } .blue { color: var(--blue); }
-        .page { display: none; } .active { display: block; animation: fadeIn 0.3s; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .amount { font-size: 16px; font-weight: 800; }
     </style>
 </head>
 
-<body class="dark-mode"> 
+<body class="dark-mode">
 
-<div id="toast">✅ Saved Successfully</div>
+<div id="toast">✅ Saved Successfully!</div>
 
 <div class="container">
     <div id="dashboard" class="page active">
         <div class="header">
             <div class="logo">Expense Tracker</div>
-            <div style="display: flex; gap: 10px; align-items: center;">
-                <button onclick="toggleDark()" style="border:none; background:none; font-size:20px; cursor:pointer;">🌓</button>
-                <button class="refresh-fab" id="refreshBtn" onclick="refreshNow()"><span id="refreshIcon">⟳</span></button>
+            <div class="header-actions">
+                <button class="icon-btn" onclick="toggleDarkMode()">🌓</button>
+                <button class="icon-btn" id="refreshBtn" onclick="hardRefresh()"><span>⟳</span></button>
             </div>
         </div>
 
         <div class="wallet-grid">
-            <div class="wallet-card"><h4>Cash</h4><h2 id="cashBal">৳ 0</h2></div>
-            <div class="wallet-card"><h4>Bkash</h4><h2 id="bkashBal">৳ 0</h2></div>
-            <div class="wallet-card"><h4>Nagad</h4><h2 id="nagadBal">৳ 0</h2></div>
-            <div class="wallet-card"><h4>Bank</h4><h2 id="bankBal">৳ 0</h2></div>
+            <div class="wallet-card">
+                <div class="wallet-info"><h4>Cash</h4><h2 id="cashBal">৳ 0</h2></div>
+                <div class="wallet-dot" style="background:#64748b"></div>
+            </div>
+            <div class="wallet-card">
+                <div class="wallet-info"><h4>Bkash</h4><h2 id="bkashBal">৳ 0</h2></div>
+                <div class="wallet-dot" style="background:var(--bkash)"></div>
+            </div>
+            <div class="wallet-card">
+                <div class="wallet-info"><h4>Nagad</h4><h2 id="nagadBal">৳ 0</h2></div>
+                <div class="wallet-dot" style="background:var(--nagad)"></div>
+            </div>
+            <div class="wallet-card">
+                <div class="wallet-info"><h4>Bank</h4><h2 id="bankBal">৳ 0</h2></div>
+                <div class="wallet-dot" style="background:var(--bank)"></div>
+            </div>
         </div>
 
-        <div class="top-stats">
+        <div class="main-stats">
             <div class="stat-box"><h4>Income</h4><h2 class="green" id="income">৳ 0</h2></div>
             <div class="stat-box"><h4>Expense</h4><h2 class="red" id="expense">৳ 0</h2></div>
             <div class="stat-box"><h4>Balance</h4><h2 class="blue" id="balance">৳ 0</h2></div>
         </div>
 
         <div class="card">
-            <div class="card-title">Add Transaction</div>
+            <div class="card-title">Add Entry</div>
             <select id="type" onchange="updateCategory()"><option value="">Type</option><option>Income</option><option>Expense</option></select>
             <select id="category" onchange="handleCategoryChange()"><option value="">Category</option></select>
             <select id="payment"><option>Cash</option><option>Bkash</option><option>Nagad</option><option>Bank</option></select>
             <input type="number" id="amount" placeholder="Amount">
             <input type="text" id="person" placeholder="Person Name" style="display:none;">
-            <textarea id="note" placeholder="Write Note (Optional)"></textarea>
-            <button class="save-btn" id="saveBtn" onclick="saveData()">Save Entry</button>
+            <textarea id="note" placeholder="Note (Optional)"></textarea>
+            <button class="save-btn" id="saveBtn" onclick="saveData()">Save Transaction</button>
         </div>
 
         <div class="activity-card">
-            <div class="card-title">Recent Activity</div>
+            <div class="card-title" style="font-size: 16px;">⚡ Recent Activity</div>
             <div id="recentList"></div>
         </div>
     </div>
 
     <div id="history" class="page">
-        <div class="card">
-            <div class="card-title">Full History</div>
-            <input type="text" id="searchInput" placeholder="Search..." onkeyup="filterHistory()">
+        <div class="activity-card">
+            <div class="card-title">All History</div>
+            <input type="text" id="searchInput" placeholder="Search transactions..." onkeyup="filterHistory()">
             <div id="historyList"></div>
         </div>
     </div>
@@ -139,11 +165,11 @@
     <div id="loans" class="page">
         <div class="card">
             <div class="card-title">Loan Summary</div>
-            <div style="background: var(--bg); padding: 25px; border-radius: 20px; text-align: center; margin-bottom: 15px; border: 1px solid var(--border);">
-                <h4 style="font-size: 11px; color: var(--sub); text-transform: uppercase;">Net Loan Status</h4>
-                <h2 class="blue" id="loanStatus" style="font-size: 26px;">৳ 0</h2>
+            <div style="background: linear-gradient(135deg, #1e293b, #020617); padding: 35px 20px; border-radius: 28px; text-align: center; margin-bottom: 25px; border: 1px solid var(--border);">
+                <h4 style="font-size: 11px; color: #94a3b8; text-transform: uppercase; margin-bottom: 10px;">Net Loan</h4>
+                <h2 id="loanStatus" style="font-size: 28px; font-weight: 800; color: #60a5fa;">৳ 0</h2>
             </div>
-            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-bottom: 15px;">
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px; margin-bottom: 25px;">
                 <div class="stat-box"><h4>Receive</h4><h2 class="green" id="receiveAmount">৳ 0</h2></div>
                 <div class="stat-box"><h4>Pay</h4><h2 class="red" id="payAmount">৳ 0</h2></div>
             </div>
@@ -161,33 +187,24 @@
 <script>
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxA3FVbmfnbYjPJHd6QmgWbZp2fe3MGtiVX9jWHJ6xBNzk4HYQJH0_5XZalXrba8c3YFg/exec";
 
-    function toggleDark() { document.body.classList.toggle("dark-mode"); }
-
-    function showPage(id, btn) {
-        document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
-        document.getElementById(id).classList.add("active");
-        document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("active-nav"));
-        btn.classList.add("active-nav");
+    function showPage(pageId, btn) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.getElementById(pageId).classList.add('active');
+        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active-nav'));
+        btn.classList.add('active-nav');
     }
 
-    // 🔥 Fix: Refresh Function with Animation & Clear 🔥
-    function refreshNow(){
+    function toggleDarkMode() { document.body.classList.toggle("dark-mode"); }
+
+    function hardRefresh() {
         const btn = document.getElementById("refreshBtn");
         btn.classList.add("spinning");
-        
-        // ফর্ম ক্লিয়ার করা
         document.getElementById("amount").value = "";
         document.getElementById("note").value = "";
         document.getElementById("person").value = "";
         document.getElementById("type").value = "";
         document.getElementById("category").innerHTML = '<option value="">Category</option>';
-        document.getElementById("payment").value = "Cash";
-
-        loadDashboard();
-
-        setTimeout(() => {
-            btn.classList.remove("spinning");
-        }, 800);
+        loadDashboard().finally(() => { setTimeout(() => btn.classList.remove("spinning"), 1000); });
     }
 
     function updateCategory(){
@@ -206,7 +223,7 @@
 
     function saveData(){
         let btn = document.getElementById("saveBtn");
-        btn.innerText = "Saving...";
+        btn.innerText = "Processing...";
         let data = {
             date: new Date().toLocaleDateString('en-GB'),
             type: document.getElementById("type").value,
@@ -217,24 +234,26 @@
             note: document.getElementById("note").value
         };
         fetch(SCRIPT_URL, { method:"POST", body:JSON.stringify(data) }).then(() => { 
-            document.getElementById("toast").className = "show";
-            setTimeout(() => { document.getElementById("toast").className = ""; }, 3000);
-            btn.innerText = "Save Entry";
-            refreshNow(); 
+            btn.innerText = "Save Transaction"; 
+            document.getElementById("toast").classList.add("show");
+            setTimeout(() => { document.getElementById("toast").classList.remove("show"); }, 3000);
+            hardRefresh(); 
         });
     }
 
-    function getPayTagClass(method){
-        if(!method) return "pay-tag";
-        let m = method.toLowerCase();
+    function getPayTagClass(m){
+        if(!m) return "pay-tag";
+        m = m.toLowerCase();
         if(m.includes("bkash")) return "pay-tag bkash";
         if(m.includes("nagad")) return "pay-tag nagad";
         if(m.includes("bank")) return "pay-tag bank";
         return "pay-tag";
     }
 
-    function loadDashboard(){
-        fetch(SCRIPT_URL).then(res => res.json()).then(data => {
+    async function loadDashboard(){
+        try {
+            const res = await fetch(SCRIPT_URL);
+            const data = await res.json();
             document.getElementById("income").innerText = "৳ " + (data.income || 0);
             document.getElementById("expense").innerText = "৳ " + (data.expense || 0);
             document.getElementById("balance").innerText = "৳ " + (data.balance || 0);
@@ -252,27 +271,36 @@
             let recent = document.getElementById("recentList"); recent.innerHTML = "";
             (data.recent || []).slice(0,3).forEach(item => {
                 let cls = item.type == "Income" ? "green" : "red";
+                let displayDate = item.date.split('T')[0]; 
                 recent.innerHTML += `
                     <div class="activity-item">
                         <div class="activity-info">
                             <h4>${item.category}</h4>
-                            <p>${item.payment} • ${item.date}</p>
+                            <p>${displayDate}</p>
+                            <span>${item.payment}</span>
                         </div>
-                        <div class="activity-amount ${cls}">৳ ${item.amount}</div>
+                        <div class="amount ${cls}">৳ ${item.amount}</div>
                     </div>`;
             });
 
             let history = document.getElementById("historyList"); history.innerHTML = "";
             (data.recent || []).forEach((item) => {
+                let cls = item.type == "Income" ? "green" : "red";
+                let displayDate = item.date.split('T')[0]; 
                 history.innerHTML += `
-                    <div class="item">
+                    <div class="activity-item">
                         <div style="flex:1">
-                            <h4>${item.category}</h4>
-                            <p style="font-size:11px; color:var(--sub);">${item.date}</p>
-                            <span class="${getPayTagClass(item.payment)}">${item.payment}</span>
-                            ${item.person ? `<span class="person-tag">👤 ${item.person}</span>` : ''}
+                            <h4 style="font-size:15px; font-weight:700;">${item.category}</h4>
+                            <p style="font-size:11px; color:var(--sub); margin-bottom:4px;">${displayDate}</p>
+                            <div style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top:8px;">
+                                <span class="${getPayTagClass(item.payment)}">${item.payment}</span>
+                                ${item.person ? `<span class="person-tag">👤 ${item.person}</span>` : ''}
+                            </div>
+                            ${item.note ? `<div style="background:rgba(100,116,139,0.05); padding:10px; border-radius:12px; margin-top:10px; font-size:11px; font-style:italic; border-left:3px solid var(--blue);">"${item.note}"</div>` : ''}
                         </div>
-                        <div class="amount ${item.type == "Income" ? "green" : "red"}">৳ ${item.amount}</div>
+                        <div style="text-align:right; margin-left:15px;">
+                            <div class="amount ${cls}">৳ ${item.amount}</div>
+                        </div>
                     </div>`;
             });
 
@@ -293,14 +321,14 @@
             });
             for(let k in loanMap){
                 if(loanMap[k].bal == 0) continue;
-                loanSummary.innerHTML += `<div class="activity-item"><div><h4>${loanMap[k].name}</h4><p>${loanMap[k].bal > 0 ? 'Receive' : 'Pay'}</p></div><div class="activity-amount ${loanMap[k].bal > 0 ? 'green' : 'red'}">৳ ${Math.abs(loanMap[k].bal)}</div></div>`;
+                loanSummary.innerHTML += `<div class="activity-item"><div><h4 style="font-size:16px; font-weight:700;">${loanMap[k].name}</h4><p style="font-size:12px; color:var(--sub);">${loanMap[k].bal > 0 ? 'Will Receive' : 'Need To Pay'}</p></div><div style="font-weight:800; font-size:17px;" class="${loanMap[k].bal > 0 ? "green" : "red"}">৳ ${Math.abs(loanMap[k].bal)}</div></div>`;
             }
-        });
+        } catch (e) { console.log(e); }
     }
 
     function filterHistory(){
         let v = document.getElementById("searchInput").value.toLowerCase();
-        document.querySelectorAll("#historyList .item").forEach(i => i.style.display = i.innerText.toLowerCase().includes(v) ? "flex" : "none");
+        document.querySelectorAll("#historyList .activity-item").forEach(i => i.style.display = i.innerText.toLowerCase().includes(v) ? "flex" : "none");
     }
 
     loadDashboard();
