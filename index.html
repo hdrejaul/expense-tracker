@@ -52,7 +52,7 @@
         .wallet-dot { width: 6px; height: 6px; border-radius: 50%; }
 
         /* Stats */
-        .main-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 25px; }
+        .main-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 15px; } 
         .stat-box { background: var(--card); padding: 16px 5px; border-radius: 20px; border: 1px solid var(--border); text-align: center; box-shadow: var(--shadow); }
         .stat-box h4 { font-size: 10px; color: var(--sub); text-transform: uppercase; margin-bottom: 4px; font-weight: 700; }
         .stat-box h2 { font-size: 13px; font-weight: 800; }
@@ -107,12 +107,44 @@
 
         .person-icon-wrapper { display: flex; align-items: center; justify-content: center; }
 
-        /* Nav */
-        .bottom-nav { position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%); width: 92%; max-width: 430px; background: var(--card); padding: 10px; border-radius: 30px; display: flex; justify-content: space-around; box-shadow: 0 15px 35px rgba(0,0,0,0.1); z-index: 999; border: 1px solid var(--border); }
-        .nav-btn { border: none; background: none; padding: 12px 20px; border-radius: 20px; display: flex; flex-direction: column; align-items: center; gap: 5px; font-size: 11px; font-weight: 700; color: var(--sub); cursor: pointer; flex: 1; transition: 0.3s; }
-        .nav-btn.active-nav { background: var(--blue); color: white; box-shadow: 0 8px 15px rgba(37, 99, 235, 0.3); }
+        /* 🔥 Updated Regular Bottom Nav 🔥 */
+        .bottom-nav { 
+            position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%); 
+            width: 92%; max-width: 430px; background: var(--card); padding: 10px 15px; 
+            border-radius: 35px; display: flex; justify-content: space-around; align-items: center; 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1); z-index: 998; border: 1px solid var(--border); 
+        }
+        .nav-btn { 
+            border: none; background: none; padding: 10px; border-radius: 20px; 
+            display: flex; flex-direction: column; align-items: center; gap: 4px; 
+            font-size: 11px; font-weight: 700; color: var(--sub); cursor: pointer; flex: 1; transition: 0.3s; 
+        }
+        .nav-btn.active-nav { color: var(--blue); }
+        .nav-icon { font-size: 18px; margin-bottom: 2px; }
 
-        #toast { visibility: hidden; min-width: 250px; background: #10b981; color: white; text-align: center; border-radius: 50px; padding: 16px; position: fixed; z-index: 1000; left: 50%; bottom: 100px; transform: translateX(-50%); font-weight: 700; box-shadow: 0 10px 30px rgba(16, 185, 129, 0.3); }
+        /* 🔥 NEW: Standalone Floating Action Button (FAB) 🔥 */
+        .standalone-fab {
+            position: fixed;
+            bottom: 95px; /* Positioned above the bottom nav */
+            right: 25px; /* Aligned to the right edge */
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            color: white;
+            width: 58px;
+            height: 58px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.4);
+            z-index: 1000;
+            transition: 0.3s;
+        }
+        .standalone-fab:active { transform: scale(0.92); }
+
+        #toast { visibility: hidden; min-width: 250px; background: #10b981; color: white; text-align: center; border-radius: 50px; padding: 16px; position: fixed; z-index: 1001; left: 50%; bottom: 100px; transform: translateX(-50%); font-weight: 700; box-shadow: 0 10px 30px rgba(16, 185, 129, 0.3); }
         #toast.show { visibility: visible; animation: fadeInUp 0.4s forwards; }
         @keyframes fadeInUp { from { opacity: 0; bottom: 80px; } to { opacity: 1; bottom: 100px; } }
 
@@ -126,6 +158,7 @@
 <div id="toast">✅ Saved Successfully!</div>
 
 <div class="container">
+    <!-- 🏠 Dashboard Page -->
     <div id="dashboard" class="page active">
         <div class="header">
             <div class="logo">Expense Tracker</div>
@@ -135,6 +168,7 @@
             </div>
         </div>
 
+        <!-- Wallets -->
         <div class="wallet-grid">
             <div class="wallet-card">
                 <div class="wallet-info"><h4>Cash</h4><h2 id="cashBal">৳ 0</h2></div>
@@ -154,24 +188,57 @@
             </div>
         </div>
 
+        <!-- Stats -->
         <div class="main-stats">
             <div class="stat-box"><h4>Income</h4><h2 class="green" id="income">৳ 0</h2></div>
             <div class="stat-box"><h4>Expense</h4><h2 class="red" id="expense">৳ 0</h2></div>
             <div class="stat-box"><h4>Balance</h4><h2 class="blue" id="balance">৳ 0</h2></div>
         </div>
 
+        <!-- Mini Loan Summary -->
+        <div style="display: flex; gap: 10px; margin-bottom: 25px;">
+            <div style="flex: 1; background: var(--card); padding: 12px 15px; border-radius: 20px; border: 1px solid var(--border); box-shadow: var(--shadow); display: flex; align-items: center; justify-content: space-between;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <div style="background: rgba(16, 185, 129, 0.15); color: var(--green); width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg>
+                    </div>
+                    <span style="font-size: 13px; font-weight: 800; color: var(--sub);">Get</span>
+                </div>
+                <span style="font-size: 15px; font-weight: 800; color: var(--green);" id="dashReceive">৳ 0</span>
+            </div>
+            
+            <div style="flex: 1; background: var(--card); padding: 12px 15px; border-radius: 20px; border: 1px solid var(--border); box-shadow: var(--shadow); display: flex; align-items: center; justify-content: space-between;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <div style="background: rgba(239, 68, 68, 0.15); color: var(--red); width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
+                    </div>
+                    <span style="font-size: 13px; font-weight: 800; color: var(--sub);">Pay</span>
+                </div>
+                <span style="font-size: 15px; font-weight: 800; color: var(--red);" id="dashPay">৳ 0</span>
+            </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="activity-card">
+            <div class="card-title" style="font-size: 16px;">⚡ Recent Activity</div>
+            <div id="recentList"></div>
+        </div>
+    </div>
+
+    <!-- ➕ Add Entry Page -->
+    <div id="add-entry" class="page">
         <div class="card">
-            <div class="card-title">Add Entry</div>
+            <div class="card-title" style="text-align: center; color: var(--blue);">New Transaction</div>
 
             <select id="type" onchange="updateCategory()">
-                <option value="">Type</option>
+                <option value="">Select Type</option>
                 <option>Income</option>
                 <option>Expense</option>
                 <option>Transfer</option>
             </select>
 
             <select id="category" onchange="handleCategoryChange()">
-                <option value="">Category</option>
+                <option value="">Select Category</option>
             </select>
 
             <select id="payment">
@@ -181,23 +248,19 @@
                 <option>Bank</option>
             </select>
 
-            <input type="number" id="amount" placeholder="Amount">
+            <input type="number" id="amount" placeholder="Amount (৳)">
 
             <input type="text" id="person" placeholder="Person Name" style="display:none;">
 
-            <textarea id="note" placeholder="Note (Optional)"></textarea>
+            <textarea id="note" placeholder="Note (Optional)" style="height: 100px;"></textarea>
 
             <button class="save-btn" id="saveBtn" onclick="saveData()">
                 Save Transaction
             </button>
         </div>
-
-        <div class="activity-card">
-            <div class="card-title" style="font-size: 16px;">⚡ Recent Activity</div>
-            <div id="recentList"></div>
-        </div>
     </div>
 
+    <!-- 📜 History Page -->
     <div id="history" class="page">
         <div class="activity-card">
             <div class="card-title">All History</div>
@@ -206,6 +269,7 @@
         </div>
     </div>
 
+    <!-- 💰 Loans Page -->
     <div id="loans" class="page">
         <div class="card">
             <div class="card-title">Loan Summary</div>
@@ -222,10 +286,22 @@
     </div>
 </div>
 
+<!-- 🔥 Standalone Floating Action Button (Separated from Bottom Nav) 🔥 -->
+<button class="standalone-fab" onclick="showPage('add-entry', null)">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+</button>
+
+<!-- Bottom Navigation (Cleaned Up) -->
 <nav class="bottom-nav">
-    <button class="nav-btn active-nav" onclick="showPage('dashboard', this)">🏠<br>Home</button>
-    <button class="nav-btn" onclick="showPage('history', this)">📜<br>History</button>
-    <button class="nav-btn" onclick="showPage('loans', this)">💰<br>Loans</button>
+    <button class="nav-btn active-nav" id="nav-home" onclick="showPage('dashboard', this)">
+        <span class="nav-icon">🏠</span>Home
+    </button>
+    <button class="nav-btn" onclick="showPage('history', this)">
+        <span class="nav-icon">📜</span>History
+    </button>
+    <button class="nav-btn" onclick="showPage('loans', this)">
+        <span class="nav-icon">💰</span>Loans
+    </button>
 </nav>
 
 <script>
@@ -236,8 +312,14 @@
     function showPage(pageId, btn) {
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
         document.getElementById(pageId).classList.add('active');
+        
+        // Remove active class from all nav buttons
         document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active-nav'));
-        btn.classList.add('active-nav');
+        
+        // Add active class only if it's a regular nav button
+        if(btn && btn.classList.contains('nav-btn')) {
+            btn.classList.add('active-nav');
+        }
     }
 
     function toggleDarkMode() { document.body.classList.toggle("dark-mode"); }
@@ -258,7 +340,7 @@
         document.getElementById("note").value = "";
         document.getElementById("person").value = "";
         document.getElementById("type").value = "";
-        document.getElementById("category").innerHTML = '<option value="">Category</option>';
+        document.getElementById("category").innerHTML = '<option value="">Select Category</option>';
         document.getElementById("payment").style.display = "block";
         document.getElementById("person").style.display = "none";
         loadDashboard().finally(() => { setTimeout(() => btn.classList.remove("spinning"), 1000); });
@@ -337,7 +419,11 @@
             btn.innerText = "Save Transaction"; 
             document.getElementById("toast").classList.add("show");
             setTimeout(() => { document.getElementById("toast").classList.remove("show"); }, 3000);
+            
+            // Redirect back to Dashboard after saving
             hardRefresh(); 
+            showPage('dashboard', document.getElementById('nav-home'));
+
         }).catch(err => {
             console.error(err);
             btn.innerText = "Save Transaction";
@@ -350,7 +436,7 @@
             const res = await fetch(SCRIPT_URL);
             const data = await res.json();
             
-            // 🔥 SMART LOGIC FOR INCOME & EXPENSE (User's perfect logic) 🔥
+            // SMART LOGIC FOR INCOME & EXPENSE
             let calcIncome = 0;
             let calcExpense = 0;
 
@@ -359,16 +445,16 @@
                 
                 if (item.type === "Income") {
                     if (item.category === "Loan Received") {
-                        calcExpense -= amt; // ধার ফেরত পেলে খরচ (Expense) কমবে
+                        calcExpense -= amt; 
                     } else {
-                        calcIncome += amt; // রেগুলার ইনকাম এবং Take Loan
+                        calcIncome += amt; 
                     }
                 } 
                 else if (item.type === "Expense") {
                     if (item.category === "Loan Paid") {
-                        calcIncome -= amt; // ধার পরিশোধ করলে ইনকাম (Take Loan) থেকে কমবে
+                        calcIncome -= amt; 
                     } else {
-                        calcExpense += amt; // রেগুলার খরচ এবং Give Loan
+                        calcExpense += amt; 
                     }
                 }
             });
@@ -377,7 +463,7 @@
             document.getElementById("expense").innerText = "৳ " + calcExpense;
             document.getElementById("balance").innerText = "৳ " + (calcIncome - calcExpense);
             
-            // Wallet Calculation (Always remains perfect based on Cash flow)
+            // Wallet Calculation
             let pBal = { Cash: 0, Bkash: 0, Nagad: 0, Bank: 0 };
             (data.recent || []).forEach(item => {
                 let amt = Number(item.amount);
@@ -440,8 +526,14 @@
                     </div>`;
             });
 
-            // Loans Handling
+            // Loans Handling (Populates both Dashboard & Loans Page)
             let recVal = data.receive || 0; let payVal = data.pay || 0;
+            
+            // For Dashboard Widgets
+            document.getElementById("dashReceive").innerText = "৳ " + Math.abs(recVal);
+            document.getElementById("dashPay").innerText = "৳ " + Math.abs(payVal);
+            
+            // For Loans Page
             document.getElementById("receiveAmount").innerText = "৳ " + Math.abs(recVal);
             document.getElementById("payAmount").innerText = "৳ " + Math.abs(payVal);
             document.getElementById("loanStatus").innerText = "৳ " + (recVal - payVal);
