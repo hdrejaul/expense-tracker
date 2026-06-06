@@ -363,7 +363,7 @@
             paymentField.style.display = "block"; 
         } 
         else if (type == "Transfer") {
-            opts = ["Bank To Bkash", "Bank To Nagad", "Bank To Cash", "Bkash To Bank", "Cash To Bank", "Nagad To Bank"];
+            opts = ["Bank To Bkash", "Bank To Nagad", "Bank To Cash", "Bkash To Bank", "Cash To Bank",];
             paymentField.style.display = "none"; 
         }
 
@@ -383,7 +383,7 @@
 
         document.getElementById("person").style.display =
             ["Give Loan", "Take Loan", "Loan Received", "Loan Paid"].includes(cat) ? "block" : "none";
-
+		if (cat === "Salary") paymentField.value = "Bank";
         if (cat === "DPS Payment") paymentField.value = "Bkash";
         if (cat === "Bank To Bkash") paymentField.value = "Bkash";
         if (cat === "Bank To Nagad") paymentField.value = "Nagad";
