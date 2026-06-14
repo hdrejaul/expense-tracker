@@ -118,8 +118,13 @@
         .activity-card { background: var(--card); padding: 22px; border-radius: 28px; margin-bottom: 20px; border: 1px solid var(--border); box-shadow: var(--shadow); }
         .activity-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
         .view-all-btn { font-size: 12px; font-weight: 700; color: var(--blue); cursor: pointer; padding: 4px 10px; background: rgba(37, 99, 235, 0.1); border-radius: 12px; }
-        .activity-item { background: var(--card); padding: 15px; border-radius: 18px; margin-bottom: 10px; border: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; box-shadow: var(--shadow); }
-        .cat-icon-wrapper { width: 40px; height: 40px; border-radius: 14px; background: rgba(100, 116, 139, 0.1); display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; background-size: cover; background-position: center; }
+        
+        /* 🛠️ PREMIUM CARD STYLING RESTORED & BACKGROUND FIX APPLIED */
+        .activity-item { background: var(--card); padding: 15px; border-radius: 18px; margin-bottom: 10px; border: 1px solid var(--border); display: flex; flex-direction: column; gap: 8px; box-shadow: var(--shadow); }
+        .activity-main { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+        
+        .cat-icon-wrapper { width: 40px; height: 40px; border-radius: 14px; background-color: rgba(100, 116, 139, 0.1); display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; background-size: cover; background-position: center; background-repeat: no-repeat; }
+        body.dark-mode .cat-icon-wrapper { background-color: rgba(255,255,255,0.05); }
         
         .pay-tag { color: white; font-size: 9px; padding: 3px 10px; border-radius: 8px; font-weight: 700; text-transform: uppercase; display: inline-block; background: #64748b; }
         .pay-tag.bkash { background: var(--bkash); }
@@ -128,7 +133,12 @@
         .pay-tag.transfer { background: var(--blue); color: #ffffff; }
         
         .person-tag { background: linear-gradient(135deg, rgba(37, 99, 235, 0.12), rgba(37, 99, 235, 0.05)); color: var(--blue); font-size: 10px; padding: 3px 10px; border-radius: 12px; font-weight: 700; margin-left: 6px; display: inline-flex; align-items: center; gap: 5px; border: 1px solid rgba(37, 99, 235, 0.2); }
+        body.dark-mode .person-tag { background: linear-gradient(135deg, rgba(96, 165, 250, 0.15), rgba(96, 165, 250, 0.05)); border-color: rgba(96, 165, 250, 0.2); color: #60a5fa; }
         .person-icon-wrapper { display: flex; align-items: center; justify-content: center; }
+
+        /* 📝 PREMIUM NOTE BOX CSS */
+        .note-box { background: rgba(37, 99, 235, 0.05); padding: 8px 12px; border-radius: 10px; font-size: 11px; font-style: italic; border-left: 3px solid var(--blue); width: 100%; color: var(--text); margin-top: 4px; text-align: left; }
+        body.dark-mode .note-box { background: rgba(59, 130, 246, 0.05); border-left-color: #3b82f6; }
 
         .bottom-nav { position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%); width: 92%; max-width: 430px; background: var(--card); padding: 10px 15px; border-radius: 35px; display: flex; justify-content: space-around; align-items: center; box-shadow: 0 15px 35px rgba(0,0,0,0.1); z-index: 998; border: 1px solid var(--border); }
         .nav-btn { border: none; background: none; padding: 10px; border-radius: 20px; display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: 11px; font-weight: 700; color: var(--sub); cursor: pointer; flex: 1; transition: 0.3s; }
@@ -149,7 +159,6 @@
 
 <body class="dark-mode">
 
-<!-- ✨ Mesh BG ✨ -->
 <div class="mesh-bg">
     <div class="mesh-circle c1"></div>
     <div class="mesh-circle c2"></div>
@@ -350,17 +359,18 @@
     }
     setGreeting();
 
-    // 🌟 Bills ক্যাটাগরিতে নতুন কাস্টম ইমেজ লোগো সেট করা হলো
+    // 🌟 ফিক্সড আইকন জেনারেটর ফাংশন
     function getCatIconHTML(category) {
         if (category === "Salary" || category === "Personal") {
-            return `<div class="cat-icon-wrapper" style="background-image: url('https://lh3.googleusercontent.com/d/1AUSmyr1rJgOnt9qzfqT65-D58Gf4AotT');"></div>`;
+            return `<div class="cat-icon-wrapper" style="background-image: url('https://lh3.googleusercontent.com/d/1HsAWYvoKLjRk_xBlBlR_eAWKCjYSfWW6');"></div>`;
         }
         if (category === "Bills") {
-            return `<div class="cat-icon-wrapper" style="background-image: url('https://static.vecteezy.com/system/resources/previews/006/732/109/non_2x/bill-icon-sign-symbol-logo-free-vector.jpg'); background-size: 80% 80%; background-repeat: no-repeat; background-color: rgba(255,255,255,0.08);"></div>`;
+            return `<div class="cat-icon-wrapper" style="background-image: url('https://static.vecteezy.com/system/resources/previews/006/732/109/non_2x/bill-icon-sign-symbol-logo-free-vector.jpg'); background-size: 80%; background-color: rgba(255,255,255,0.05);"></div>`;
         }
         const icons = { "Extra Work": "💻", "Bonus": "🎁", "Family": "🏠", "Home Expense": "🛋️", "DPS Payment": "🏦", "Give Loan": "📤", "Take Loan": "📥", "Loan Received": "🤝", "Loan Paid": "✅", "Bank To Bkash": "🔄", "Bank To Nagad": "🔄", "Bank To Cash": "🔄", "Bkash To Bank": "🔄", "Cash To Bank": "🔄", "Nagad To Bank": "🔄" };
         return `<div class="cat-icon-wrapper">${icons[category] || "📑"}</div>`;
     }
+
     function showPage(pageId, btn) {
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
         document.getElementById(pageId).classList.add('active');
@@ -457,7 +467,6 @@
             document.getElementById("nagadBal").innerText = "৳ " + pBal.Nagad;
             document.getElementById("bankBal").innerText = "৳ " + pBal.Bank;
 
-            // 🔥 Fixed Loan Calculation from array directly to ensure 100% sync
             let calculatedReceive = 0;
             let calculatedPay = 0;
             let loanMap = {};
@@ -472,36 +481,54 @@
                 }
             });
 
-            // Calculate total Receive and Pay from active loans
             for (let k in loanMap) {
                 if (loanMap[k].bal > 0) calculatedReceive += loanMap[k].bal;
                 if (loanMap[k].bal < 0) calculatedPay += Math.abs(loanMap[k].bal);
             }
 
-            // Populating UI Widgets safely
             document.getElementById("dashReceive").innerText = "৳ " + calculatedReceive;
             document.getElementById("dashPay").innerText = "৳ " + calculatedPay;
             document.getElementById("receiveAmount").innerText = "৳ " + calculatedReceive;
             document.getElementById("payAmount").innerText = "৳ " + calculatedPay;
             document.getElementById("loanStatus").innerText = "৳ " + (calculatedReceive - calculatedPay);
 
-            // Render Recent and History List with Updated Icons
+            // ⚡ PREMIUM CARD RENDERING RESTORED ⚡
             let recent = document.getElementById("recentList"); recent.innerHTML = "";
             let history = document.getElementById("historyList"); history.innerHTML = "";
+            
             (data.recent || []).forEach((item, index) => {
                 let cls = item.type == "Income" ? "green" : (item.type == "Transfer" ? "blue" : "red");
-                let catIconHTML = getCatIconElement(item.category);
+                let catIconHTML = getCatIconHTML(item.category);
                 
-                let cardHTML = `<div class="activity-item"><div style="display:flex;align-items:center;gap:12px;">${catIconHTML}<div><h4>${item.category}</h4><p>${formatAppDate(item.date)}</p><span class="pay-tag ${item.payment.toLowerCase()}">${item.payment}</span></div></div><div class="amount ${cls}">৳ ${item.amount}</div></div>`;
+                let cleanNote = (item.note && item.note.toString().trim() !== "undefined") ? item.note.toString().trim() : "";
+
+                let cardHTML = `
+                    <div class="activity-item">
+                        <div class="activity-main">
+                            <div style="display:flex;align-items:center;gap:12px;">
+                                ${catIconHTML}
+                                <div>
+                                    <h4 style="font-size: 15px; font-weight: 700; margin-bottom: 2px;">${item.category}</h4>
+                                    <p style="font-size: 11px; color: var(--sub); margin-bottom: 4px;">${formatAppDate(item.date)}</p>
+                                    <div style="display: flex; flex-wrap: wrap; gap: 6px; align-items: center;">
+                                        <span class="pay-tag ${item.payment ? item.payment.toLowerCase() : ''}">${item.payment || ''}</span>
+                                        ${item.person ? `<span class="person-tag">${userIcon} <span>${item.person}</span></span>` : ''}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="amount ${cls}">৳ ${item.amount}</div>
+                        </div>
+                        ${cleanNote !== "" ? `<div class="note-box">"${cleanNote}"</div>` : ''}
+                    </div>`;
+
                 if(index < 3) recent.innerHTML += cardHTML;
                 history.innerHTML += cardHTML;
             });
 
-            // Populate Loan Summary List Page
             let loanSummary = document.getElementById("loanSummaryList"); loanSummary.innerHTML = "";
             for(let k in loanMap){
                 if(loanMap[k].bal == 0) continue;
-                loanSummary.innerHTML += `<div class="activity-item"><div><h4 style="font-size:16px; font-weight:700;">${loanMap[k].name}</h4><p style="font-size:12px; color:var(--sub);">${loanMap[k].bal > 0 ? 'Will Receive' : 'Need To Pay'}</p></div><div style="font-weight:800; font-size:17px;" class="${loanMap[k].bal > 0 ? "green" : "red"}">৳ ${Math.abs(loanMap[k].bal)}</div></div>`;
+                loanSummary.innerHTML += `<div class="activity-item"><div><h4 style="font-size:16px; font-weight:700;">${loanMap[k].name}</h4><p style="font-size:12px; color:var(--sub);">${loanMap[k].bal > 0 ? 'Will Receive' : 'Need To Pay'}</p></div><div class="amount ${loanMap[k].bal > 0 ? "green" : "red"}">৳ ${Math.abs(loanMap[k].bal)}</div></div>`;
             }
             return true;
         } catch (e) { return false; }
